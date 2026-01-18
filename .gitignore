@@ -1,3 +1,4 @@
 # ignore original data download
 
 ignore/**
+.Rproj.user

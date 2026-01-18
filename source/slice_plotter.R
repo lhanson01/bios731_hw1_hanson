@@ -55,3 +55,4 @@ slice_plotter <- function(img, plane, slice_ind){
     stop("Plane must be S for Sagittal images, C for coronal images, or A for Axial images")
   }
 }
+
