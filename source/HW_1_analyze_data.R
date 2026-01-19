@@ -29,18 +29,29 @@ for(i in 1:nt){
 rm(functional_image_data)
 gc()
 
-corr_vector <- apply(X, MARGIN = 2, function(x){
-  corr <- cor(x, seed_time_series)
-})
+s_z <-scale(seed_time_series)
+corr_vector <- (1/(nt-1))*t(s_z)%*%scale(X)
 
-corr_frame <- as_tibble(corr_vector) %>% mutate(which_voxel = brain_mask[,4]) %>%
-             arrange(desc(abs(value)))
+#corr_vector_old <- apply(X, MARGIN = 2, function(x){
+#  corr <- cor(x, seed_time_series)
+#})
 
-# find 31 largest magnitude time series
-#highest_correlation_voxels <- as.data.frame(X[,corr_frame$which_voxel[1:31]])
+corr_frame <- as_tibble(t(corr_vector)) %>%
+              mutate(which_voxel = brain_mask[,4],
+              which_mask_voxel = row_number(),
+              value = ifelse(is.nan(V1), NA_real_, V1)) %>%
+              arrange(desc(abs(value)))
 
-#rm(X)
-#gc()
+# find k largest magnitude corr time series
+k <- 31
+
+#### sorted voxels
+highest_correlation_voxels <- as.data.frame(X[,corr_frame$which_mask_voxel[seq_len(k)]])
+
+
+
+rm(X)
+gc()
 
 
 
