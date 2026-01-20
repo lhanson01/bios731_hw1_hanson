@@ -1,7 +1,5 @@
 #install.packages("ggplot2", repos = "https://cloud.r-project.org")
 #install.packages("ggnewscale", repos = "https://cloud.r-project.org")
-library(ggplot2)
-library(ggnewscale)
 
 # need a long data frame with columns for voxel #, bold value at time t,
 # and correlation with seed

@@ -14,11 +14,15 @@ bibliography: references.bib
 ```{r}
 #| echo: false
 library(here)
+library(ggplot2)
+library(ggnewscale)
+library(RNifti)
+library(tidyverse)
 ```
 
 ## Overview
 
-This analysis aims to investigate the functional connectivity of the brain during an LSD experience of a single subject at rest. Specifically, we perform a seed based connectivity analysis with the seed in the precuneus, a key hub of the default mode network (@Utevsky932). The default mode network is a brain network particularly active during the resting state (@raichle2001default). 
+This analysis aims to investigate the functional connectivity of the brain during an LSD experience of a single subject at rest. Specifically, we perform a seed based connectivity analysis with the seed in the precuneus, a key hub of the default mode network (@Utevsky932). The default mode network is a brain network particularly active during the resting state (@raichle2001default).
 
 ## Data Description
 
@@ -34,7 +38,7 @@ We performed a seed-based connectivity analysis (@seedbased). The seed voxel was
 
 Pearson's correlation coefficient was then calculated pairwise between the BOLD time series of the seed voxel and all other voxels in the brain mask.
 
-# Data Download
+## Data Download
 
 This script loads the anatomical image and the functional images into the R environment using R package RNifti.
 
@@ -42,7 +46,7 @@ This script loads the anatomical image and the functional images into the R envi
 source(here("source", "HW_1_data_download.R"))
 ```
 
-# Data Analysis
+## Data Analysis
 
 This code also contains necessary data processing as well as analysis including the creation of the brain mask, the selection of the seed voxel, the calculation of correlations across voxels and the sorting of voxels for visualization.
 
@@ -62,33 +66,39 @@ source(here("source", "HW_1_data_visualization.R"))
 #| echo: false
 axial_connectivity_plot
 ```
+
 ```{r}
 #| echo: false
 coronal_connectivity_plot
 ```
+
 ```{r}
 #| echo: false
 sagittal_connectivity_plot 
 ```
 
-Degree of correlation between the seed voxel and the sagittal, coronal, and axial brain slices which contain the seed voxel. The seed voxel is indicated by the red circle. 
+Degree of correlation between the seed voxel and the sagittal, coronal, and axial brain slices which contain the seed voxel. The seed voxel is indicated by the red circle.
 :::
 
-:::{#fig-time-series}
+::: {#fig-time-series}
 ```{r}
 #| echo: false
 bold_lineplot
 ```
+
 BOLD time series for the 30 most correlated voxels with the seed voxel. Opacity of the line indicates degree of correlation.
 :::
 
 ## Results
+
 Figure 1 shows highest correlation with neighboring voxels which is consistent with previous work on structural and functional connectivity (@KOCH2002241). Areas which are highly structurally connected like immediate neighboring voxels are likely to show high levels of functional connectivity (@VANDENHEUVEL2010519).
 
-
-The sagittal slice shown in Figure 1 shows generally low connectivity with the medial prefrontal cortex, another key hub of the default mode network (@ZHOU2025101613). This is consistent with other literature showing DMN modulation as a key effect of psychedelics use on brain connectivity. (@psychedelic) 
+The sagittal slice shown in Figure 1 shows generally low connectivity with the medial prefrontal cortex, another key hub of the default mode network (@ZHOU2025101613). This is consistent with other literature showing DMN modulation as a key effect of psychedelics use on brain connectivity. (@psychedelic)
 
 Figure 2 shows similar BOLD intensities across the most-correlated voxels. Nearly all voxels displayed on this plot were neighbored the seed voxel.
+
+<div style="page-break-before: always;"></div>
+
 
 ## References
 

@@ -11,8 +11,11 @@ connectivity_plotter <- function(mask, corr_frame, anat_data, seed, plane){
     corr_intensity_frame <- inner_join(mask_new, corr_frame) %>% rename(X = dim1,
                                                                         Y = dim2,
                                                                         Z = dim3,
-                                                                        correlation = value)
+                                                                        correlation = value,
+                                                                        )
+
     slice_corr_intensity <- corr_intensity_frame %>% filter(X == seed$x) %>%
+      #mutate(correlation = ifelse(abs(correlation) < 0.5, NA_real_, correlation)) %>%
       inner_join(.,slice_longer, by=join_by(Y,Z))
 
 

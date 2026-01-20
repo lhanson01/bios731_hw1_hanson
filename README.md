@@ -26,6 +26,9 @@ here
 
 Instructions for reproducing analysis from GitHub repository:
 
+Download and unzip bios731_hw1_hanson-main. Then navigate to C:\Users\whhanso\Downloads\bios731_hw1_hanson-main\bios731_hw1_hanson-main and open 2026_01_JW_731HW1.RProject. Open the final_report.qmd file in the analysis folder and render. 
+
+Note: These instructions are for use with the truncated image data located in the github repository. 
 
 sessionInfo() call:
 R version 4.5.1 (2025-06-13 ucrt)

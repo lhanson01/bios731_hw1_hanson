@@ -138,19 +138,20 @@ div.csl-indent {
 <p>We performed a seed-based connectivity analysis (<span class="citation" data-cites="seedbased">Hampson et al. (<a href="#ref-seedbased" role="doc-biblioref">2002</a>)</span>). The seed voxel was selected roughly in the precuneus region of the cortex.</p>
 <p>Pearson’s correlation coefficient was then calculated pairwise between the BOLD time series of the seed voxel and all other voxels in the brain mask.</p>
 </section>
-<section id="data-download" class="level1">
-<h1>Data Download</h1>
+<section id="data-download" class="level2">
+<h2 class="anchored" data-anchor-id="data-download">Data Download</h2>
 <p>This script loads the anatomical image and the functional images into the R environment using R package RNifti.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(<span class="st">"source"</span>, <span class="st">"HW_1_data_download.R"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="data-analysis" class="level1">
-<h1>Data Analysis</h1>
+<section id="data-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="data-analysis">Data Analysis</h2>
 <p>This code also contains necessary data processing as well as analysis including the creation of the brain mask, the selection of the seed voxel, the calculation of correlations across voxels and the sorting of voxels for visualization.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(<span class="st">"source"</span>, <span class="st">"HW_1_data_analysis.R"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
 <section id="visualization" class="level2">
 <h2 class="anchored" data-anchor-id="visualization">Visualization</h2>
 <div class="cell">
@@ -220,7 +221,10 @@ Figure&nbsp;2: BOLD time series for the 30 most correlated voxels with the seed 
 <h2 class="anchored" data-anchor-id="results">Results</h2>
 <p>Figure 1 shows highest correlation with neighboring voxels which is consistent with previous work on structural and functional connectivity (<span class="citation" data-cites="KOCH2002241">Koch, Norris, and Hund-Georgiadis (<a href="#ref-KOCH2002241" role="doc-biblioref">2002</a>)</span>). Areas which are highly structurally connected like immediate neighboring voxels are likely to show high levels of functional connectivity (<span class="citation" data-cites="VANDENHEUVEL2010519">van den Heuvel and Hulshoff Pol (<a href="#ref-VANDENHEUVEL2010519" role="doc-biblioref">2010</a>)</span>).</p>
 <p>The sagittal slice shown in Figure 1 shows generally low connectivity with the medial prefrontal cortex, another key hub of the default mode network (<span class="citation" data-cites="ZHOU2025101613">Zhou and Becker (<a href="#ref-ZHOU2025101613" role="doc-biblioref">2025</a>)</span>). This is consistent with other literature showing DMN modulation as a key effect of psychedelics use on brain connectivity. (<span class="citation" data-cites="psychedelic">Gattuso et al. (<a href="#ref-psychedelic" role="doc-biblioref">2022</a>)</span>)</p>
-<p>Figure 2 shows similar BOLD intensities across the most-correlated voxels. Nearly all voxels displayed on this plot were near neighbors to the seed voxel.</p>
+<p>Figure 2 shows similar BOLD intensities across the most-correlated voxels. Nearly all voxels displayed on this plot were neighbored the seed voxel.</p>
+<div style="page-break-before: always;">
+
+</div>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
@@ -253,7 +257,6 @@ van den Heuvel, Martijn P., and Hilleke E. Hulshoff Pol. 2010. <span>“Explorin
 Zhou, Feng, and Benjamin Becker. 2025. <span>“The Default Mode Network and Emotion — Dual Roles of the Medial Prefrontal Cortex in Emotional Experience and Regulation.”</span> <em>Current Opinion in Behavioral Sciences</em> 66: 101613. https://doi.org/<a href="https://doi.org/10.1016/j.cobeha.2025.101613">https://doi.org/10.1016/j.cobeha.2025.101613</a>.
 </div>
 </div>
-</section>
 </section>
 
 </main>
