@@ -52,8 +52,6 @@ highest_correlation_voxels <- as.data.frame(X[,corr_frame$which_mask_voxel[seq_l
 rm(X)
 gc()
 
-####write corr_frame to results folder
 
-write_folder_path <- here("results")
 
 

@@ -55,7 +55,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="final_report_files/libs/clipboard/clipboard.min.js"></script>
@@ -105,17 +125,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>This analysis aims to investigate the functional connectivity of the brain during an LSD experience of a single subject.</p>
+<p>This analysis aims to investigate the functional connectivity of the brain during an LSD experience of a single subject at rest. Specifically, we perform a seed based connectivity analysis with the seed in the precuneus, a key hub of the default mode network (<span class="citation" data-cites="Utevsky932">Utevsky, Smith, and Huettel (<a href="#ref-Utevsky932" role="doc-biblioref">2014</a>)</span>). The default mode network is a brain network particularly active during the resting state (<span class="citation" data-cites="raichle2001default">Raichle et al. (<a href="#ref-raichle2001default" role="doc-biblioref">2001</a>)</span>).</p>
 </section>
 <section id="data-description" class="level2">
 <h2 class="anchored" data-anchor-id="data-description">Data Description</h2>
 <p>The data contain the Blood-Oxygen-Level-Dependent (BOLD) time series at each brain voxel for the subject during the scan as well as the T1 weighted anatomical image.</p>
-<p>The pre-processed fMRI data were accessed and downloaded from OpenNeuro.org (https://openneuro.org/datasets/ds003059/versions/1.0.0; Authors: Robin Carhart-Harris et al.). To make the size of the data smaller, brain volumes 50 through 100 were extracted from the original data. The data download from the GitHub repository contains this shrunken data.</p>
-<p>R package RNifti was used to read in image files. A brain mask i.e.&nbsp;the voxels which contain brain tissue was specified by selecting only voxels which had anatomical T1-weighted intensity greater than 0.</p>
+<p>The pre-processed fMRI data were accessed and downloaded from OpenNeuro.org (<span class="citation" data-cites="ds003059:1.0.0">Carhart-Harris (<a href="#ref-ds003059:1.0.0" role="doc-biblioref">2020</a>)</span> et al.). To make the size of the data smaller, brain volumes 50 through 100 were extracted from the original data. The data download from the GitHub repository contains this shrunken data.</p>
+<p>R package RNifti (<span class="citation" data-cites="RNifti">Clayden, Cox, and Jenkinson (<a href="#ref-RNifti" role="doc-biblioref">2026</a>)</span>) was used to read in image files. A brain mask i.e.&nbsp;the voxels which contain brain tissue was specified by selecting only voxels which had anatomical T1-weighted intensity greater than 0.</p>
 </section>
 <section id="analysis" class="level2">
 <h2 class="anchored" data-anchor-id="analysis">Analysis</h2>
-<p>We performed a seed-based connectivity analysis . The seed voxel was selected roughly in the precuneus region of the cortex. Pearson’s correlation coefficient was then calculated pairwise between the BOLD time series of the seed voxel and all other voxels in the brain mask.</p>
+<p>We performed a seed-based connectivity analysis (<span class="citation" data-cites="seedbased">Hampson et al. (<a href="#ref-seedbased" role="doc-biblioref">2002</a>)</span>). The seed voxel was selected roughly in the precuneus region of the cortex.</p>
+<p>Pearson’s correlation coefficient was then calculated pairwise between the BOLD time series of the seed voxel and all other voxels in the brain mask.</p>
 </section>
 <section id="data-download" class="level1">
 <h1>Data Download</h1>
@@ -126,75 +147,112 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="data-analysis" class="level1">
 <h1>Data Analysis</h1>
-<p>This code also contains necessary data processing as well as analysis.</p>
+<p>This code also contains necessary data processing as well as analysis including the creation of the brain mask, the selection of the seed voxel, the calculation of correlations across voxels and the sorting of voxels for visualization.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(<span class="st">"source"</span>, <span class="st">"HW_1_data_analysis.R"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>##Visualization</p>
+<section id="visualization" class="level2">
+<h2 class="anchored" data-anchor-id="visualization">Visualization</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(<span class="st">"source"</span>, <span class="st">"visualization_functions.R"</span>))</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(<span class="st">"source"</span>, <span class="st">"HW_1_data_visualization.R"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(sagittal_connectivity_plot)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(coronal_connectivity_plot)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(axial_connectivity_plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell quarto-layout-panel" data-layout-ncol="1">
-<div class="quarto-layout-row">
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 100.0%;justify-content: flex-start;">
-<div id="fig-connectivity-slices-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-brains" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-connectivity-slices-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="final_report_files/figure-html/fig-connectivity-slices-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-connectivity-slices-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Pearson correlation strength between the seed voxel BOLD time series and other voxel time series of the brain over the scan. The seed voxel is indicated by the red circle. Only the slices containing the seed voxel are shown here.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
+<div aria-describedby="fig-brains-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 100.0%;justify-content: flex-start;">
-<div id="fig-connectivity-slices-2" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-connectivity-slices-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="final_report_files/figure-html/fig-connectivity-slices-2.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-connectivity-slices-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Pearson correlation strength between the seed voxel BOLD time series and other voxel time series of the brain over the scan. The seed voxel is indicated by the red circle. Only the slices containing the seed voxel are shown here.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<div class="quarto-layout-row">
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 100.0%;justify-content: flex-start;">
-<div id="fig-connectivity-slices-3" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-connectivity-slices-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="final_report_files/figure-html/fig-connectivity-slices-3.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-connectivity-slices-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Pearson correlation strength between the seed voxel BOLD time series and other voxel time series of the brain over the scan. The seed voxel is indicated by the red circle. Only the slices containing the seed voxel are shown here.
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>bold_lineplot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
 <p><img src="final_report_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption>The thirty most correlated voxels in the rest of the brain. Opacity indicates magnitude of correlation. No anti-correlations were recorded among these thirty.</figcaption>
 </figure>
 </div>
 </div>
 </div>
+<div class="cell quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="final_report_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="cell quarto-layout-cell" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="final_report_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-brains-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Degree of correlation between the seed voxel and the sagittal, coronal, and axial brain slices which contain the seed voxel. The seed voxel is indicated by the red circle.
+</figcaption>
+</figure>
+</div>
+<div id="fig-time-series" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-time-series-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="final_report_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-time-series-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: BOLD time series for the 30 most correlated voxels with the seed voxel. Opacity of the line indicates degree of correlation.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<p>Figure 1 shows highest correlation with neighboring voxels which is consistent with previous work on structural and functional connectivity (<span class="citation" data-cites="KOCH2002241">Koch, Norris, and Hund-Georgiadis (<a href="#ref-KOCH2002241" role="doc-biblioref">2002</a>)</span>). Areas which are highly structurally connected like immediate neighboring voxels are likely to show high levels of functional connectivity (<span class="citation" data-cites="VANDENHEUVEL2010519">van den Heuvel and Hulshoff Pol (<a href="#ref-VANDENHEUVEL2010519" role="doc-biblioref">2010</a>)</span>).</p>
+<p>The sagittal slice shown in Figure 1 shows generally low connectivity with the medial prefrontal cortex, another key hub of the default mode network (<span class="citation" data-cites="ZHOU2025101613">Zhou and Becker (<a href="#ref-ZHOU2025101613" role="doc-biblioref">2025</a>)</span>). This is consistent with other literature showing DMN modulation as a key effect of psychedelics use on brain connectivity. (<span class="citation" data-cites="psychedelic">Gattuso et al. (<a href="#ref-psychedelic" role="doc-biblioref">2022</a>)</span>)</p>
+<p>Figure 2 shows similar BOLD intensities across the most-correlated voxels. Nearly all voxels displayed on this plot were near neighbors to the seed voxel.</p>
+</section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-ds003059:1.0.0" class="csl-entry" role="listitem">
+Carhart-Harris, Robin. 2020. <span>“"Neural Correlates of the LSD Experience Revealed by Multimodal Neuroimaging".”</span> OpenNeuro. <a href="https://doi.org/10.18112/openneuro.ds003059.v1.0.0">https://doi.org/10.18112/openneuro.ds003059.v1.0.0</a>.
+</div>
+<div id="ref-RNifti" class="csl-entry" role="listitem">
+Clayden, Jon, Bob Cox, and Mark Jenkinson. 2026. <em>RNifti: Fast r and c++ Access to NIfTI Images</em>. <a href="https://doi.org/10.32614/CRAN.package.RNifti">https://doi.org/10.32614/CRAN.package.RNifti</a>.
+</div>
+<div id="ref-psychedelic" class="csl-entry" role="listitem">
+Gattuso, James J, Daniel Perkins, Simon Ruffell, Andrew J Lawrence, Daniel Hoyer, Laura H Jacobson, Christopher Timmermann, et al. 2022. <span>“Default Mode Network Modulation by Psychedelics: A Systematic Review.”</span> <em>International Journal of Neuropsychopharmacology</em> 26 (3): 155–88. <a href="https://doi.org/10.1093/ijnp/pyac074">https://doi.org/10.1093/ijnp/pyac074</a>.
+</div>
+<div id="ref-seedbased" class="csl-entry" role="listitem">
+Hampson, Michelle, Bradley S. Peterson, Pawel Skudlarski, James C. Gatenby, and John C. Gore. 2002. <span>“Detection of Functional Connectivity Using Temporal Correlations in MR Images.”</span> <em>Human Brain Mapping</em> 15 (4): 247–62. https://doi.org/<a href="https://doi.org/10.1002/hbm.10022">https://doi.org/10.1002/hbm.10022</a>.
+</div>
+<div id="ref-KOCH2002241" class="csl-entry" role="listitem">
+Koch, Martin A., David G. Norris, and Margret Hund-Georgiadis. 2002. <span>“An Investigation of Functional and Anatomical Connectivity Using Magnetic Resonance Imaging.”</span> <em>NeuroImage</em> 16 (1): 241–50. https://doi.org/<a href="https://doi.org/10.1006/nimg.2001.1052">https://doi.org/10.1006/nimg.2001.1052</a>.
+</div>
+<div id="ref-raichle2001default" class="csl-entry" role="listitem">
+Raichle, Marcus E., Ann Mary MacLeod, Abraham Z. Snyder, William J. Powers, Debra A. Gusnard, and Gordon L. Shulman. 2001. <span>“A Default Mode of Brain Function.”</span> <em>Proceedings of the National Academy of Sciences</em> 98 (2): 676–82. <a href="https://doi.org/10.1073/pnas.98.2.676">https://doi.org/10.1073/pnas.98.2.676</a>.
+</div>
+<div id="ref-Utevsky932" class="csl-entry" role="listitem">
+Utevsky, Amanda V., David V. Smith, and Scott A. Huettel. 2014. <span>“Precuneus Is a Functional Core of the Default-Mode Network.”</span> <em>Journal of Neuroscience</em> 34 (3): 932–40. <a href="https://doi.org/10.1523/JNEUROSCI.4227-13.2014">https://doi.org/10.1523/JNEUROSCI.4227-13.2014</a>.
+</div>
+<div id="ref-VANDENHEUVEL2010519" class="csl-entry" role="listitem">
+van den Heuvel, Martijn P., and Hilleke E. Hulshoff Pol. 2010. <span>“Exploring the Brain Network: A Review on Resting-State fMRI Functional Connectivity.”</span> <em>European Neuropsychopharmacology</em> 20 (8): 519–34. https://doi.org/<a href="https://doi.org/10.1016/j.euroneuro.2010.03.008">https://doi.org/10.1016/j.euroneuro.2010.03.008</a>.
+</div>
+<div id="ref-ZHOU2025101613" class="csl-entry" role="listitem">
+Zhou, Feng, and Benjamin Becker. 2025. <span>“The Default Mode Network and Emotion — Dual Roles of the Medial Prefrontal Cortex in Emotional Experience and Regulation.”</span> <em>Current Opinion in Behavioral Sciences</em> 66: 101613. https://doi.org/<a href="https://doi.org/10.1016/j.cobeha.2025.101613">https://doi.org/10.1016/j.cobeha.2025.101613</a>.
+</div>
+</div>
 </section>
 </section>
 
