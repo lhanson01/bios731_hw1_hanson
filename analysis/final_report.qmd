@@ -1,0 +1,72 @@
+---
+title: "BIOS 731 Homework 1: A simple seed-based analysis of functional connectivity in a single subject"
+author: "Liam Hanson"
+format: html
+editor: visual
+fig_caption: true
+knitr: 
+  opts_chunk:
+    message: false
+    warning: false
+---
+
+```{r}
+#| echo: false
+library(here)
+```
+
+## Overview
+
+This analysis aims to investigate the functional connectivity of the brain during an LSD experience of a single subject.
+
+## Data Description
+
+The data contain the Blood-Oxygen-Level-Dependent (BOLD) time series at each brain voxel for the subject during the scan as well as the T1 weighted anatomical image.
+
+The pre-processed fMRI data were accessed and downloaded from OpenNeuro.org (https://openneuro.org/datasets/ds003059/versions/1.0.0; Authors: Robin Carhart-Harris et al.). To make the size of the data smaller, brain volumes 50 through 100 were extracted from the original data. The data download from the GitHub repository contains this shrunken data.
+
+R package RNifti was used to read in image files. A brain mask i.e. the voxels which contain brain tissue was specified by selecting only voxels which had anatomical T1-weighted intensity greater than 0.
+
+## Analysis
+
+We performed a seed-based connectivity analysis . The seed voxel was selected roughly in the precuneus region of the cortex. Pearson's correlation coefficient was then calculated pairwise between the BOLD time series of the seed voxel and all other voxels in the brain mask.
+
+# Data Download
+This script loads the anatomical image and the functional images into the R environment
+using R package RNifti. 
+
+```{r}
+source(here("source", "HW_1_data_download.R"))
+```
+
+# Data Analysis 
+This code also contains necessary data processing as well as analysis.
+
+```{r}
+source(here("source", "HW_1_data_analysis.R"))
+```
+
+##Visualization
+
+```{r}
+source(here("source", "visualization_functions.R"))
+source(here("source", "HW_1_data_visualization.R"))
+```
+
+```{r}
+#| label: fig-connectivity-slices
+#| fig-cap: "Pearson correlation strength between the seed voxel BOLD time series and other voxel time series of the brain over the scan. The seed voxel is indicated by the red circle. Only the slices containing the seed voxel are shown here."
+#| fig-show: hold
+#| layout-ncol: 1
+
+print(sagittal_connectivity_plot)
+print(coronal_connectivity_plot)
+print(axial_connectivity_plot)
+```
+
+```{r}
+#| fig-cap: "The thirty most correlated voxels in the rest of the brain. Opacity indicates magnitude of correlation. No anti-correlations were recorded among these thirty."
+bold_lineplot
+```
+
+## References
